@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Teejay Don Best Collections</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="admin-dashboard">
+        <div class="container">
+            <div class="dashboard-header">
+                <h1>Admin Dashboard</h1>
+                <div class="admin-actions">
+                    <a href="index.html" class="btn btn-secondary">
+                        <i class="fas fa-store"></i> View Store
+                    </a>
+                    <button id="logout-btn" class="btn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <h3 id="stat-total-products">0</h3>
+                    <p>Total Products</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="stat-featured-products">0</h3>
+                    <p>Featured Products</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="inventory-value">₦0</h3>
+                    <p>Inventory Value</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="total-stock">0</h3>
+                    <p>Total Stock</p>
+                </div>
+            </div>
+
+            <div class="admin-views">
+                <button class="admin-view-btn active" data-view="dashboard">Dashboard</button>
+                <button class="admin-view-btn" data-view="products">Products Management</button>
+            </div>
+
+            <!-- Dashboard View -->
+            <div id="dashboard-view" class="admin-view">
+                <div class="dashboard-content">
+                    <h2>Quick Actions</h2>
+                    <div class="admin-actions">
+                        <button class="btn" onclick="adminManager.switchView('products')">
+                            <i class="fas fa-plus"></i> Add New Product
+                        </button>
+                    </div>
+
+                    <div class="recent-products-container">
+                        <h2>Recent Products</h2>
+                        <div id="recent-products-list">
+                            <p>Loading recent products...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Management View -->
+            <div id="products-view" class="admin-view" style="display: none;">
+                <div class="view-header">
+                    <h2>Products Management</h2>
+                    <button class="btn" id="add-new-product-btn">
+                        <i class="fas fa-plus"></i> Add New Product
+                    </button>
+                </div>
+
+                <div class="products-management-layout">
+                    <div class="product-form-container" style="display: none;">
+                        <h2 id="form-title">Add New Product</h2>
+                        
+                        <form class="product-form" id="product-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="product-title">Product Title *</label>
+                                    <input type="text" id="product-title" name="title" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="product-price">Price (₦) *</label>
+                                    <input type="number" id="product-price" name="price" step="0.01" min="0" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="product-category">Category *</label>
+                                    <select id="product-category" name="category" required>
+                                        <option value="">Select Category</option>
+                                        <option value="Shirts">Shirts</option>
+                                        <option value="Pants">Pants</option>
+                                        <option value="Dresses">Dresses</option>
+                                        <option value="Jackets">Jackets</option>
+                                        <option value="Coats">Coats</option>
+                                        <option value="Sweaters">Sweaters</option>
+                                        <option value="Accessories">Accessories</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="product-stock">Stock Quantity *</label>
+                                    <input type="number" id="product-stock" name="stock" min="0" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="product-description">Description</label>
+                                <textarea id="product-description" name="description" rows="3"></textarea>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Product Image</label>
+                                    <div class="image-upload-placeholder" id="image-upload-placeholder">
+                                        <input type="file" id="product-image" name="image" accept="image/*" class="image-upload-input">
+                                        <div class="placeholder-content">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <p><strong>Drag & drop an image</strong> or click to upload</p>
+                                        </div>
+                                        <img src="" alt="Image preview" class="image-preview" id="image-preview">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="product-featured" name="featured">
+                                        Featured Product
+                                    </label>
+                                    
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="product-active" name="active" checked>
+                                        Active Product
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn" id="submit-btn">Add Product</button>
+                                <button type="button" class="btn btn-secondary" id="cancel-edit" style="display: none;">Cancel Edit</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="products-list-container">
+                        <div class="products-list" id="products-list">
+                            <!-- Products will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js"></script>
+    <script src="main.js"></script>
+    <script src="auth.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

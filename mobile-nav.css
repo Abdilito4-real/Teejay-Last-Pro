@@ -1,0 +1,123 @@
+/* Mobile Navigation & Tab Bar */
+.mobile-tab-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--light);
+    display: none;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.tab-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 15px;
+    border-radius: 20px;
+    transition: var(--transition);
+    color: var(--dark-gray);
+    font-size: 12px;
+}
+
+.tab-item i {
+    font-size: 18px;
+    margin-bottom: 4px;
+}
+
+.tab-item.active {
+    color: var(--secondary);
+    background-color: rgba(197, 165, 114, 0.1);
+}
+
+.tab-item:hover {
+    color: var(--secondary);
+}
+
+/* Mobile Menu Overlay */
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.mobile-menu-container {
+    text-align: center;
+    color: var(--light);
+}
+
+.mobile-menu-container ul li {
+    margin: 25px 0;
+}
+
+.mobile-menu-container a {
+    font-size: 1.5rem;
+    font-weight: 500;
+    display: block;
+    padding: 10px 0;
+    transition: var(--transition);
+}
+
+.mobile-menu-container a:hover {
+    color: var(--secondary);
+    transform: translateX(10px);
+}
+
+.close-menu {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    font-size: 30px;
+    color: var(--light);
+    cursor: pointer;
+}
+
+/* Show mobile tab bar on smaller screens */
+@media (max-width: 768px) {
+    .mobile-tab-bar {
+        display: flex;
+    }
+    
+    body {
+        padding-bottom: 70px;
+    }
+    
+    /* Hide desktop nav icons on mobile */
+    .nav-icons {
+        display: none;
+    }
+}
+
+/* Mobile menu animation */
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.mobile-menu-container ul li {
+    animation: slideInFromLeft 0.5s ease forwards;
+    opacity: 0;
+}
+
+.mobile-menu-container ul li:nth-child(1) { animation-delay: 0.1s; }
+.mobile-menu-container ul li:nth-child(2) { animation-delay: 0.2s; }
+.mobile-menu-container ul li:nth-child(3) { animation-delay: 0.3s; }
+.mobile-menu-container ul li:nth-child(4) { animation-delay: 0.4s; }
