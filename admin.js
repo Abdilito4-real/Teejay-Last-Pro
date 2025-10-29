@@ -208,6 +208,13 @@ class AdminManager {
 
     async handleProductSubmit(e) {
         e.preventDefault();
+        const submitBtn = document.getElementById('submit-btn');
+        const originalBtnHTML = submitBtn.innerHTML;
+
+        // Disable button and show spinner
+        submitBtn.disabled = true;
+        const actionText = this.editingProduct ? 'Updating...' : 'Adding...';
+        submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${actionText}`;
         
         const formData = new FormData(e.target);
         const productData = {
@@ -259,6 +266,10 @@ class AdminManager {
         } catch (error) {
             console.error('Error saving product:', error);
             showToast('Failed to save product', 'error');
+        } finally {
+            // Re-enable button
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnHTML;
         }
     }
 
