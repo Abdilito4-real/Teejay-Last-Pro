@@ -185,8 +185,11 @@ function displayProducts() {
             <div class="product-info">
                 <h3 class="product-title">${product.title}</h3>
                 <div class="product-category">${product.category}</div>
+                <div class="product-description-container">
+                    <p class="product-description">${product.description || 'No description available.'}</p>
+                </div>
                 <div class="product-price">₦${product.price.toLocaleString()}</div>
-                <div class="product-stock">${product.stock > 0 ? `${product.stock} in stock` : 'Out of stock'}</div>
+                <div class="product-stock">${product.stock > 0 ? `<span class="stock-level">${product.stock}</span> in stock` : 'Out of stock'}</div>
                 <div class="product-actions">
                     <a href="#" class="btn-buy" data-product='${JSON.stringify(product)}' 
                        ${product.stock === 0 ? 'style="opacity: 0.6; pointer-events: none;"' : ''}><span>${product.stock > 0 ? 'Buy Now' : 'Out of Stock'}</span></a>
@@ -203,6 +206,26 @@ function displayProducts() {
             loadMoreContainer.style.display = 'none';
         }
     }
+
+    // Check for overflowing descriptions and add "Read More" buttons
+    document.querySelectorAll('.product-description').forEach(desc => {
+        if (desc.scrollHeight > desc.clientHeight) {
+            const readMoreBtn = document.createElement('button');
+            readMoreBtn.className = 'read-more-btn';
+            readMoreBtn.textContent = 'Read More';
+            desc.parentElement.appendChild(readMoreBtn);
+
+            readMoreBtn.addEventListener('click', function() {
+                const container = this.parentElement;
+                container.classList.toggle('expanded');
+                if (container.classList.contains('expanded')) {
+                    this.textContent = 'Read Less';
+                } else {
+                    this.textContent = 'Read More';
+                }
+            });
+        }
+    });
 
     // Add event listeners to buy buttons
     document.querySelectorAll('.btn-buy').forEach(button => {
